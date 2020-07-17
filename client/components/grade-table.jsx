@@ -1,6 +1,7 @@
 import React from 'react';
 
 export default function GradeTable(props) {
+  
   const grades = props.grades;
   const gradeList = grades.map(grade =>
     <Grade key={grade.id} name={grade.name} course={grade.course} grade={grade.grade} />
