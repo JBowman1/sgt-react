@@ -30,7 +30,3 @@ function Grade(props) {
     </tr>
   );
 }
-
-import React from 'react';
-import Header from './header';
-import GradeTable from './grade-table';
