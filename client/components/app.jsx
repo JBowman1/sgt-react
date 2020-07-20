@@ -10,6 +10,7 @@ class App extends React.Component {
       grades: []
     };
     this.addNewGrade = this.addNewGrade.bind(this);
+    this.deleteGrade = this.deleteGrade.bind(this);
   }
 
   getAverageGrade(grades) {
@@ -30,6 +31,17 @@ class App extends React.Component {
       .catch(error => console.error(error.message));
   }
 
+  deleteGrade(id) {
+    fetch(`/api/grades/${id}`, {
+      method: 'DELETE'
+    }).then(response => {
+      const newGrades = [...this.state.grades];
+      const index = newGrades.findIndex(grade => id === grade.id);
+      newGrades.splice(index, 1);
+      this.setState({ grades: newGrades });
+    });
+  }
+
   componentDidMount() {
     fetch('/api/grades')
       .then(res => res.json())
@@ -46,7 +58,7 @@ class App extends React.Component {
             averageValue={isNaN(averageGrade) ? 0 : averageGrade}/>
         </div>
         <div className='row'>
-          <GradeTable grades={this.state.grades} />
+          <GradeTable grades={this.state.grades} onDeleteGrade={this.deleteGrade} />
           <GradeForm onAddNewGrade={this.addNewGrade} />
         </div>
       </div>
