@@ -1,0 +1,11 @@
+h4 {
+  display: inline-block;
+}
+
+.average{
+  float: right;
+}
+
+body{
+  margin: 1rem;
+}

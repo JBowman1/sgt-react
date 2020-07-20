@@ -1,19 +1,20 @@
 import React from 'react';
+import Grade from './grade';
 
 export default function GradeTable(props) {
-  const grades = props.grades;
-  const gradeList = grades.map(grade =>
-    <Grade key={grade.id} name={grade.name} course={grade.course} grade={grade.grade} />
+  const gradeList = (
+    props.grades.map(student => <Grade grade={student} key={student.id} deleteGrade={props.onDeleteGrade} />)
   );
 
   return (
     <div className='col col-md-8'>
-      <table className="table table-striped">
-        <thead className="thead-light">
+      <table className='table'>
+        <thead className='thead-light'>
           <tr>
-            <th>Student Name</th>
-            <th>Course</th>
-            <th>Grade</th>
+            <th scope='col'>Student Name</th>
+            <th scope='col'>Course</th>
+            <th scope='col'>Grade</th>
+            <th scope='col'>Operations</th>
           </tr>
         </thead>
         <tbody>
@@ -21,15 +22,5 @@ export default function GradeTable(props) {
         </tbody>
       </table>
     </div>
-  );
-}
-
-function Grade(props) {
-  return (
-    <tr>
-      <td>{props.name}</td>
-      <td>{props.course}</td>
-      <td>{props.grade}</td>
-    </tr>
   );
 }
