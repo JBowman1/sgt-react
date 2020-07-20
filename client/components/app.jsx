@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './header';
 import GradeTable from './grade-table';
+import GradeForm from './grade-form';
 
 class App extends React.Component {
   constructor(props) {
@@ -8,6 +9,7 @@ class App extends React.Component {
     this.state = {
       grades: []
     };
+    this.addNewGrade = this.addNewGrade.bind(this);
   }
 
   getAverageGrade(grades) {
@@ -15,7 +17,17 @@ class App extends React.Component {
       total += num.grade;
       return total;
     }, 0);
-    return Math.round(sum / grades.length);
+    return Math.round(average / grades.length);
+  }
+
+  addNewGrade(grade) {
+    fetch('/api/grades', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(grade)
+    }).then(response => response.json())
+      .then(data => this.setState({ grades: this.state.grades.concat(data) }))
+      .catch(error => console.error(error.message));
   }
 
   componentDidMount() {
@@ -27,12 +39,20 @@ class App extends React.Component {
 
   render() {
     const averageGrade = this.getAverageGrade(this.state.grades);
-      return (
-        <div>
+    return (
+      <div>
+        <div className='row'>
           <Header title='Student Grade Table' averageTitle='Average Grade'
             averageValue={isNaN(averageGrade) ? 0 : averageGrade}/>
-          <GradeTable grades={this.state.grades} />
         </div>
-      );
+        <div className='row'>
+          <GradeTable grades={this.state.grades} />
+          <GradeForm onAddNewGrade={this.addNewGrade} />
+        </div>
+      </div>
+
+    );
   }
 }
+
+export default App;
