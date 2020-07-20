@@ -2,13 +2,20 @@ import React from 'react';
 import Header from './header';
 import GradeTable from './grade-table';
 
-
-class App extends React.Component { class App extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       grades: []
     };
+  }
+
+  getAverageGrade(grades) {
+    const average = grades.reduce((total, num) => {
+      total += num.grade;
+      return total;
+    }, 0);
+    return Math.round(sum / grades.length);
   }
 
   componentDidMount() {
@@ -19,12 +26,13 @@ class App extends React.Component { class App extends React.Component {
   }
 
   render() {
-      return null; return (
+    const averageGrade = this.getAverageGrade(this.state.grades);
+      return (
         <div>
-          <Header />
+          <Header title='Student Grade Table' averageTitle='Average Grade'
+            averageGrade={isNaN(average) ? 0 : average}/>
           <GradeTable grades={this.state.grades} />
         </div>
       );
-    }
   }
 }
