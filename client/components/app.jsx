@@ -30,7 +30,7 @@ class App extends React.Component {
       return (
         <div>
           <Header title='Student Grade Table' averageTitle='Average Grade'
-            averageGrade={isNaN(average) ? 0 : average}/>
+            averageValue={isNaN(averageGrade) ? 0 : averageGrade}/>
           <GradeTable grades={this.state.grades} />
         </div>
       );
