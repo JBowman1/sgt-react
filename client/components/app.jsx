@@ -18,7 +18,7 @@ class App extends React.Component { class App extends React.Component {
   }
 
   render() {
-      return null; return (
+      return (
         <div>
           <Header />
           <GradeTable grades={this.state.grades} />
